@@ -22,6 +22,12 @@ class OwnersController < ApplicationController
     redirect to "owners/#{@owner.id}"
   end
 
+  # Go the get the previous information from the database to get it modified
+  get '/owners/:id' do
+    @owner = Owner.find(params[:id])
+    erb :'/owners/show'
+  end
+
   # Display a form to modify a previous Record
   get '/owners/:id/edit' do
     @owner = Owner.find(params[:id])
@@ -29,11 +35,7 @@ class OwnersController < ApplicationController
     erb :'/owners/edit'
   end
 
-  # Go the get the previous information from the database to get it modified
-  get '/owners/:id' do
-    @owner = Owner.find(params[:id])
-    erb :'/owners/show'
-  end
+
 
   # Add and save the modified information to the database
   post '/owners/:id' do
@@ -78,7 +80,7 @@ end
 #     @owner = Owner.find(params[:id])
 #     erb :'/owners/show'
 #   end
-  
+
 #   # Display a form to modify a previous Record
 #   get '/owners/:id/edit' do
 #     @owner = Owner.find(params[:id])
