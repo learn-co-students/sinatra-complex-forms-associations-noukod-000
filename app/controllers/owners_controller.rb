@@ -19,7 +19,7 @@ class OwnersController < ApplicationController
       @owner.pets << Pet.create(name: params["pet"]["name"])
     end
     @owner.save
-    redirect to "owners/#{@owner.id}"
+    redirect to "/owners/#{@owner.id}"
   end
 
   # Go the get the previous information from the database to get it modified
@@ -35,22 +35,34 @@ class OwnersController < ApplicationController
     erb :'/owners/edit'
   end
 
+  patch '/owners/:id' do
+        if !params[:owner].keys.include?("pet_ids")
+        params[:owner]["pet_ids"] = []
+        end
 
-
-  # Add and save the modified information to the database
-  post '/owners/:id' do
-      if !params[:owner].keys.include?("pet_ids")
-      params[:owner]["pet_ids"] = []
-      end
-
-      @owner = Owner.find(params[:id])
-      @owner.update(params["owner"])
-      if !params["pet"]["name"].empty?
-        @owner.pets << Pet.create(name: params["pet"]["name"])
-      end
-      redirect "owners/#{@owner.id}"
+        @owner = Owner.find(params[:id])
+        @owner.update(params["owner"])
+        if !params["pet"]["name"].empty?
+          @owner.pets << Pet.create(name: params["pet"]["name"])
+        end
+        redirect "owners/#{@owner.id}"
   end
 end
+
+  # Add and save the modified information to the database
+#   post '/owners/:id' do
+#       if !params[:owner].keys.include?("pet_ids")
+#       params[:owner]["pet_ids"] = []
+#       end
+#
+#       @owner = Owner.find(params[:id])
+#       @owner.update(params["owner"])
+#       if !params["pet"]["name"].empty?
+#         @owner.pets << Pet.create(name: params["pet"]["name"])
+#       end
+#       redirect "owners/#{@owner.id}"
+#   end
+# end
 # class OwnersController < ApplicationController
 
 #   # Display what is in the index file from views/owners folders.
