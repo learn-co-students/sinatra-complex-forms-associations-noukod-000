@@ -1,1 +1,4 @@
-index.erb
+<h1>Owners</h1>
+<% @owners.each do |el| %>
+  <p><a href="/owners/<%= el.id%>"><%= el.name %></a></p>
+<% end %>
